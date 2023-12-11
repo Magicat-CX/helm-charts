@@ -1,0 +1,16 @@
+# templates/oneapi/oneapi-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: oneapi
+spec:
+  selector:
+    app: oneapi
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 3000
+  {{ if .Values.oneapi.service.nodePort.enable }}
+  type: NodePort
+  {{ end }}

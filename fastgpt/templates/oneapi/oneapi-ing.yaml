@@ -1,0 +1,19 @@
+# templates/oneapi/oneapi-ing.yaml
+{{- if .Values.oneapi.ingress.enable }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oneapi
+spec:
+  rules:
+    - host: {{ .Values.oneapi.ingress.domain }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: oneapi
+                port:
+                  number: 80
+{{- end }}

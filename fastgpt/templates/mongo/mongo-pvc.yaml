@@ -1,0 +1,12 @@
+# templates/mongo/mongo-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.storageclass }}
+  resources:
+    requests:
+      storage: {{ .Values.mongo.storage }}

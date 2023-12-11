@@ -1,0 +1,31 @@
+# templates/oneapi/oneapi-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oneapi
+spec:
+  selector:
+    matchLabels:
+      app: oneapi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oneapi
+    spec:
+      containers:
+        - name: oneapi
+          image: {{ .Values.oneapi.image }}
+          ports:
+            - containerPort: 3000
+              name: oneapi
+          env:
+            - name: TZ
+              value: {{ .Values.oneapi.tz }}
+          volumeMounts:
+            - name: oneapi-data
+              mountPath: /data
+      volumes:
+        - name: oneapi-data
+          persistentVolumeClaim:
+            claimName: oneapi-pvc

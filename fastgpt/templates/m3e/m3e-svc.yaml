@@ -1,0 +1,16 @@
+# templates/m3e/m3e-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: m3e-large-api
+spec:
+  selector:
+    app: m3e-large-api
+  ports:
+    - protocol: TCP
+      name: api
+      port: 80
+      targetPort: 6008
+  {{ if .Values.m3e.service.nodePort.enable }}
+  type: NodePort
+  {{ end }}

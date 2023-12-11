@@ -1,0 +1,24 @@
+# templates/m3e/m3e-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: m3e-large-api
+spec:
+  selector:
+    matchLabels:
+      app: m3e-large-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: m3e-large-api
+    spec:
+      containers:
+        - name: m3e-large-api
+          image: {{ .Values.m3e.image }}
+          ports:
+            - containerPort: 6008
+              name: api
+          env:
+            - name: sk-key
+              value: {{ .Values.m3e.sk }}

@@ -1,0 +1,7 @@
+# templates/fastgpt/fastgpt-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastgpt-config
+data:
+  config.json: {{ .Values.fastgpt.config | quote }}

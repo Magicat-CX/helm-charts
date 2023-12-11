@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  fastgpt:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-11T10:44:11.0282262+08:00"
+    description: FastGPT 是一个基于 LLM 大语言模型的知识库问答系统，提供开箱即用的数据处理、模型调用等能力。同时可以通过 Flow 可视化进行工作流编排，从而实现复杂的问答场景！
+    digest: 3e5a3cfee9c52085b1fdf19d41edd444bc92a4f909da3e790829abe3b61ed132
+    name: fastgpt
+    type: application
+    urls:
+    - fastgpt-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-12-11T10:44:11.0272265+08:00"

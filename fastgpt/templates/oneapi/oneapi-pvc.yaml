@@ -1,0 +1,12 @@
+# templates/oneapi/oneapi-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oneapi-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.storageclass }}
+  resources:
+    requests:
+      storage: {{ .Values.oneapi.storage }}

@@ -1,0 +1,16 @@
+# templates/fastgpt/fastgpt-svc.yaml
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: fastgpt
+spec: 
+  selector: 
+    app: fastgpt
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 3000
+  {{ if .Values.fastgpt.service.nodePort.enable }}
+  type: NodePort
+  {{ end }}

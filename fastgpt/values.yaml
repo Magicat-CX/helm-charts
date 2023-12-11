@@ -1,0 +1,195 @@
+# values.yaml
+storageClass: local-path
+postgres:
+  image: registry.cn-hangzhou.aliyuncs.com/fastgpt/pgvector:v0.5.0
+  user: postgres
+  password: postgres # 自行修改
+  db: postgres
+  storage: 20Gi
+  service:
+    nodePort: 
+      enable: false
+
+mongo:
+  image: registry.cn-hangzhou.aliyuncs.com/fastgpt/mongo:5.0.18
+  user: mongo
+  password: password # 自行修改
+  db: fastgpt
+  storage: 20Gi
+  service:
+    nodePort:
+      enable: false
+
+oneapi:
+  enable: true
+  image: docker.io/justsong/one-api:v0.5.8
+  tz: Asia/Shanghai
+  storage: 20Gi
+  service:
+    nodePort: 
+      enable: true
+  ingress:
+    enable: false
+    domain: oneapi.example.com
+
+m3e:
+  enable: true
+  image: registry.cn-hangzhou.aliyuncs.com/fastgpt_docker/m3e-large-api:latest
+  sk: sk-XZLDUNTxVqHTjvM6eqHsHgy9maqCLSR4xHacEuutgzNnUdHL # 随机生成一个
+  service:
+    nodePort:
+      enable: false
+
+fastgpt:
+  image: registry.cn-hangzhou.aliyuncs.com/fastgpt/fastgpt:v4.6.3
+  rootPsw: P@ssw0rd # 控制台root登录密码
+  openaiBaseUrl: '' # 默认为openai的api地址
+  chatApiKey: '' # oneapi生成的key，部署完成后在secret fastgpt-env中修改，然后重启fastgpt
+  dbMaxLink: '5'
+  tokenKey: 7krX4vnVUcVe6PuP # 随机生成一个
+  rootKey: MMShc8r6LY9Yn8Z7 # 随机生成一个
+  fileTokenKey: Nab5HpnY6R4DWcs6 # 随机生成一个
+  service:
+    nodePort:
+      enable: true
+  ingress:
+    enable: false
+    domain: fastgpt.example.com # 自行修改
+  config: | # https://doc.fastgpt.in/docs/development/configuration/
+    {
+      "SystemParams": {
+        "pluginBaseUrl": "",
+        "vectorMaxProcess": 15,
+        "qaMaxProcess": 15,
+        "pgHNSWEfSearch": 100
+      },
+      "ChatModels": [
+        {
+          "model": "gpt-3.5-turbo-1106",
+          "name": "GPT35-1106",
+          "price": 0,
+          "maxContext": 16000,
+          "maxResponse": 4000,
+          "quoteMaxToken": 2000,
+          "maxTemperature": 1.2,
+          "censor": false,
+          "vision": false,
+          "defaultSystemChatPrompt": ""
+        },
+        {
+          "model": "gpt-3.5-turbo-16k",
+          "name": "GPT35-16k",
+          "maxContext": 16000,
+          "maxResponse": 16000,
+          "price": 0,
+          "quoteMaxToken": 8000,
+          "maxTemperature": 1.2,
+          "censor": false,
+          "vision": false,
+          "defaultSystemChatPrompt": ""
+        },
+        {
+          "model": "gpt-4",
+          "name": "GPT4-8k",
+          "maxContext": 8000,
+          "maxResponse": 8000,
+          "price": 0,
+          "quoteMaxToken": 4000,
+          "maxTemperature": 1.2,
+          "censor": false,
+          "vision": false,
+          "defaultSystemChatPrompt": ""
+        },
+        {
+          "model": "gpt-4-vision-preview",
+          "name": "GPT4-Vision",
+          "maxContext": 128000,
+          "maxResponse": 4000,
+          "price": 0,
+          "quoteMaxToken": 100000,
+          "maxTemperature": 1.2,
+          "censor": false,
+          "vision": true,
+          "defaultSystemChatPrompt": ""
+        }
+      ],
+      "QAModels": [
+        {
+          "model": "gpt-3.5-turbo-16k",
+          "name": "GPT35-16k",
+          "maxContext": 16000,
+          "maxResponse": 16000,
+          "price": 0
+        }
+      ],
+      "CQModels": [
+        {
+          "model": "gpt-3.5-turbo-1106",
+          "name": "GPT35-1106",
+          "maxContext": 16000,
+          "maxResponse": 4000,
+          "price": 0,
+          "functionCall": true,
+          "functionPrompt": ""
+        },
+        {
+          "model": "gpt-4",
+          "name": "GPT4-8k",
+          "maxContext": 8000,
+          "maxResponse": 8000,
+          "price": 0,
+          "functionCall": true,
+          "functionPrompt": ""
+        }
+      ],
+      "ExtractModels": [
+        {
+          "model": "gpt-3.5-turbo-1106",
+          "name": "GPT35-1106",
+          "maxContext": 16000,
+          "maxResponse": 4000,
+          "price": 0,
+          "functionCall": true,
+          "functionPrompt": ""
+        }
+      ],
+      "QGModels": [
+        {
+          "model": "gpt-3.5-turbo-1106",
+          "name": "GPT35-1106",
+          "maxContext": 1600,
+          "maxResponse": 4000,
+          "price": 0
+        }
+      ],
+      "VectorModels": [
+        {
+          "model": "text-embedding-ada-002",
+          "name": "Embedding-2",
+          "price": 0.2,
+          "defaultToken": 700,
+          "maxToken": 3000
+        }
+      ],
+      "ReRankModels": [],
+      "AudioSpeechModels": [
+        {
+          "model": "tts-1",
+          "name": "OpenAI TTS1",
+          "price": 0,
+          "voices": [
+            { "label": "Alloy", "value": "alloy", "bufferId": "openai-Alloy" },
+            { "label": "Echo", "value": "echo", "bufferId": "openai-Echo" },
+            { "label": "Fable", "value": "fable", "bufferId": "openai-Fable" },
+            { "label": "Onyx", "value": "onyx", "bufferId": "openai-Onyx" },
+            { "label": "Nova", "value": "nova", "bufferId": "openai-Nova" },
+            { "label": "Shimmer", "value": "shimmer", "bufferId": "openai-Shimmer" }
+          ]
+        }
+      ],
+      "WhisperModel": {
+        "model": "whisper-1",
+        "name": "Whisper1",
+        "price": 0
+      }
+    }

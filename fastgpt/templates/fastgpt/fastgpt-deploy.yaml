@@ -1,0 +1,31 @@
+# templates/fastgpt/fastgpt-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastgpt
+spec:
+  selector:
+    matchLabels:
+      app: fastgpt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fastgpt
+    spec:
+      containers:
+        - name: fastgpt
+          image: {{ .Values.fastgpt.image }}
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: fastgpt-env
+          volumeMounts:
+            - name: fastgpt-config
+              mountPath: /app/data/config.json
+              subPath: config.json
+      volumes:
+        - name: fastgpt-config
+          configMap:
+            name: fastgpt-config
